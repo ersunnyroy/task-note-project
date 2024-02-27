@@ -37,6 +37,11 @@ php artisan jwt:secret
 
 ## Access it using http://localhost:8000/ base url on localhost 
 
+# Testing Credentials
+
+#### Email : sunnyroy@yopmail.com
+#### Password : password123
+
 # API DOCUMENTATION 
 
 ### 1.User Registration
