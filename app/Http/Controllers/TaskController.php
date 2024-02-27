@@ -22,27 +22,24 @@ class TaskController extends Controller
             ->orderBy('priority', 'asc')
             ->orderBy('notes_count', 'desc');
         
-        if(!empty($request->filter))
-        {
-            // Filter by status
-            if (!empty($request->filter['status'])) {
-                $tasks->where('status', $request->filter['status']);
-            }
+        // Filter by status
+        if (!empty($request->status)) {
+            $tasks->where('status', $request->status);
+        }
 
-            // Filter by due_date
-            if (!empty($request->filter['due_date'])) {
-                $tasks->where('due_date', $request->filter['due_date']);
-            }
+        // Filter by due_date
+        if (!empty($request->due_date)) {
+            $tasks->where('due_date', $request->due_date);
+        }
 
-            // Filter by priority
-            if (!empty($request->filter['priority'])) {
-                $tasks->where('priority', $request->filter['priority']);
-            }
+        // Filter by priority
+        if (!empty($request->priority)) {
+            $tasks->where('priority', $request->priority);
+        }
 
-            // Filter by notes (retrieve tasks with minimum one note attached)
-            if (!empty($request->filter['notes'])) {
-                $tasks->has('notes');
-            }
+        // Filter by notes (retrieve tasks with minimum one note attached)
+        if (!empty($request->notes)) {
+            $tasks->has('notes');
         }
 
         $tasks = $tasks->get();
@@ -98,10 +95,7 @@ class TaskController extends Controller
     {
         // Generate a unique filename
         $filename = uniqid() . '_' . time() . '.' . $attachment->extension();
-
-        // Specify the storage path (you may adjust as needed)
         $path = 'attachments/' . $filename;
-
         // Save the file to the storage path
         $attachment->storeAs('public', $path);
 
