@@ -46,6 +46,7 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
+        $attachment = 'attachments/attachment'.rand(1,10).'.jpg';
         // Create notes for the task
         $note1 = Note::create([
             'subject' => 'Note 1 for ' . $subject,
