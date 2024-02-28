@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\TaskRequest;
 use Illuminate\Http\Request;
 use App\Models\Task;
+use App\Models\Note;
 
 
 class TaskController extends Controller
@@ -64,22 +65,25 @@ class TaskController extends Controller
                 'user_id' => $user->id,
             ]);
 
-            $notesData = $request->notes ?? [];
-            foreach ($notesData as $noteData) {
-                
-                $attachmentPath = NULL;
-                if(!empty($noteData['attachment']))
-                {
-                    // Save attachment and get the file path
-                    $attachmentPath = $this->saveAttachment($noteData['attachment']);
+            if ($request->has('notes')) {
+                foreach ($request->notes as $index => $noteData) {
+                    $note = new Note([
+                        'subject' => $noteData['subject'],
+                        'note' => $noteData['note'],
+                        'attachments' => [], 
+                        'task_id' => $task->id
+                    ]);
+                     
+                    if ($request->hasFile("notes.{$index}.attachment")) {
+                        $attachments =[];
+                        foreach ($request->file("notes.{$index}.attachment") as $attachment) {
+                            $attachments[] = $this->saveAttachment($attachment);
+                        }
+                        $note->attachments = $attachments;
+                    }
+                   
+                    $task->notes()->save($note);
                 }
-
-                // Create note with attachment path
-                $task->notes()->create([
-                    'subject' => $noteData['subject'],
-                    'attachment' => $attachmentPath,
-                    'note' => $noteData['note'],
-                ]);
             }
             
             DB::commit();

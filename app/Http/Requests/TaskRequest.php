@@ -22,7 +22,8 @@ class TaskRequest extends FormRequest
             'priority' => 'required|in:High,Medium,Low',
             'notes' => 'array',
             'notes.*.subject' => 'required|string|max:255',
-            'notes.*.attachment' => 'file|mimes:jpg,jpeg|max:1024', 
+            'notes.*.attachment' => 'nullable|array',
+            'notes.*.attachment.*' => 'nullable|file|max:10240',
             'notes.*.note' => 'required|string',
         ];
     }

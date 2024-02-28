@@ -46,18 +46,23 @@ class DatabaseSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
-        $attachment = 'attachments/attachment'.rand(1,10).'.jpg';
         // Create notes for the task
+        $attachments = [];
+        for ($i = 1; $i <= 3; $i++) {
+            $attachment = 'attachments/attachment' . rand(1, 10) . '.jpg';
+            $attachments[] = $attachment;
+        }
+
         $note1 = Note::create([
             'subject' => 'Note 1 for ' . $subject,
-            'attachment' => $attachment, // Replace with actual path or content
+            'attachments' => $attachments,
             'note' => 'Content of Note 1 for ' . $subject,
             'task_id' => $task->id,
         ]);
 
         $note2 = Note::create([
             'subject' => 'Note 2 for ' . $subject,
-            'attachment' => null, // No attachment for this note
+            'attachments' => null, // No attachments for this note
             'note' => 'Content of Note 2 for ' . $subject,
             'task_id' => $task->id,
         ]);
