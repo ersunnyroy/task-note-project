@@ -118,7 +118,7 @@ php artisan jwt:secret
 - `status` (Enum: New, Incomplete, Complete, required): The status of the task.
 - `priority` (Enum: High, Medium, Low, required): The priority of the task.
 - `notes` (Array of Notes, optional): An array of notes, each with a subject, attachment, and note.
--  `notes[][subject], notes[][attachment] = file, notes[][note]`
+-  `notes[][subject], notes[][attachment][] = file, notes[][note]`
 
 
 #### Response
@@ -158,37 +158,47 @@ php artisan jwt:secret
 Example Response:
 
 ```json
-[
-  {
-    "id": 1,
-    "subject": "Task 1",
-    "description": "This is the first task.",
-    "start_date": "2024-03-01",
-    "due_date": "2024-03-10",
-    "status": "New",
-    "priority": "High",
-    "created_at": "2024-03-01T12:00:00Z",
-    "updated_at": "2024-03-01T12:00:00Z",
-    "notes": [
-      {
-        "id": 1,
-        "subject": "Note 1",
-        "attachment": "attachments/attachment1.jpg",
-        "note": "This is a note for Task 1.",
-        "created_at": "2024-03-01T12:00:00Z",
-        "updated_at": "2024-03-01T12:00:00Z"
-      },
-      {
-        "id": 2,
-        "subject": "Note 2",
-        "attachment": "attachments/attachment2.jpg",
-        "note": "This is another note for Task 1.",
-        "created_at": "2024-03-01T12:00:00Z",
-        "updated_at": "2024-03-01T12:00:00Z"
-      }
+{
+    "tasks": [
+        {
+            "id": 3,
+            "subject": "Third Complete Status task ",
+            "description": "Completed Task Description",
+            "start_date": "2024-02-28",
+            "due_date": "2024-03-02",
+            "status": "Complete",
+            "priority": "High",
+            "user_id": 1,
+            "created_at": "2024-02-28T01:55:51.000000Z",
+            "updated_at": "2024-02-28T01:55:51.000000Z",
+            "notes_count": 2,
+            "notes": [
+                {
+                    "id": 5,
+                    "subject": "Note 1 for Third Complete Status task ",
+                    "attachments": [
+                        "attachments/attachment2.jpg",
+                        "attachments/attachment7.jpg",
+                        "attachments/attachment3.jpg"
+                    ],
+                    "note": "Content of Note 1 for Third Complete Status task ",
+                    "task_id": 3,
+                    "created_at": "2024-02-28T01:55:51.000000Z",
+                    "updated_at": "2024-02-28T01:55:51.000000Z"
+                },
+                {
+                    "id": 6,
+                    "subject": "Note 2 for Third Complete Status task ",
+                    "attachments": null,
+                    "note": "Content of Note 2 for Third Complete Status task ",
+                    "task_id": 3,
+                    "created_at": "2024-02-28T01:55:51.000000Z",
+                    "updated_at": "2024-02-28T01:55:51.000000Z"
+                }
+            ]
+        },
     ]
-  },
-]
+}
 ```
 ### 5. Get Tasks with Filters
 
@@ -222,24 +232,7 @@ Example Response:
     "priority": "High",
     "created_at": "2024-03-01T12:00:00Z",
     "updated_at": "2024-03-01T12:00:00Z",
-    "notes": [
-      {
-        "id": 1,
-        "subject": "Note 1",
-        "attachment": "attachments/attachment1.jpg",
-        "note": "This is a note for Task 1.",
-        "created_at": "2024-03-01T12:00:00Z",
-        "updated_at": "2024-03-01T12:00:00Z"
-      },
-      {
-        "id": 2,
-        "subject": "Note 2",
-        "attachment": "attachments/attachment2.jpg",
-        "note": "This is another note for Task 1.",
-        "created_at": "2024-03-01T12:00:00Z",
-        "updated_at": "2024-03-01T12:00:00Z"
-      }
-    ]
+    "notes": []
   },
 ]
 ```
